@@ -1,4 +1,7 @@
-export default function ResultTable() {
+import { useState } from "react";
+import { formatter } from "../utils/investment";
+
+export default function ResultTable({ inputResults }) {
   return (
     <footer>
       <table id="result" className="center">
@@ -11,7 +14,17 @@ export default function ResultTable() {
             <th>Invested Capital</th>
           </tr>
         </thead>
-        <tbody></tbody>
+        <tbody>
+          {inputResults.map((result, index) => (
+            <tr key={index}>
+              <td>{result.year}</td>
+              <td>{formatter.format(result.valueEndOfYear)}</td>
+              <td>{formatter.format(result.interest)}</td>
+              <td></td>
+              <td></td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </footer>
   );
