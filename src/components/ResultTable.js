@@ -1,7 +1,14 @@
-import { useState } from "react";
-import { formatter } from "../utils/investment";
+import { calculateInvestmentResults, formatter } from "../utils/investment";
 
-export default function ResultTable({ inputResults }) {
+export default function ResultTable({ inputs }) {
+  const resultData = calculateInvestmentResults(inputs);
+  let capital = inputs.initialInvestment + inputs.annualInvestment;
+
+  for (const result of resultData) {
+    result["investedCapital"] = capital;
+    capital += inputs.annualInvestment;
+  }
+
   return (
     <footer>
       <table id="result">
@@ -15,7 +22,7 @@ export default function ResultTable({ inputResults }) {
           </tr>
         </thead>
         <tbody className="center">
-          {inputResults.map((result, index) => (
+          {resultData.map((result, index) => (
             <tr key={index}>
               <td>{result.year}</td>
               <td>{formatter.format(result.valueEndOfYear)}</td>

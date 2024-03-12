@@ -3,29 +3,22 @@ import Header from "./components/Header";
 import UserInput from "./components/UserInput";
 import ResultTable from "./components/ResultTable";
 
-import { calculateInvestmentResults } from "./utils/investment";
 import "./styles.css";
 
 export default function App() {
   const [inputs, setInputs] = useState({
-    initialInvestment: 0,
-    annualInvestment: 0,
-    expectedReturn: 0,
-    duration: 0,
+    initialInvestment: 10000,
+    annualInvestment: 1200,
+    expectedReturn: 6,
+    duration: 10,
   });
 
-  const inputResults = calculateInvestmentResults(inputs);
-  let capital = inputs.initialInvestment + inputs.annualInvestment;
-
-  for (const result of inputResults) {
-    result["investedCapital"] = capital;
-    capital += inputs.annualInvestment;
-  }
+  const inputIsValid = inputs.duration >= 1;
 
   const handleInputs = (e) => {
     setInputs((prevInputs) => ({
       ...prevInputs,
-      [e.target.id]: Number(e.target.value),
+      [e.target.id]: Math.abs(Number(e.target.value)),
     }));
   };
 
@@ -33,7 +26,10 @@ export default function App() {
     <>
       <Header />
       <UserInput inputs={inputs} onChangeInputs={handleInputs} />
-      <ResultTable inputResults={inputResults} />
+      {!inputIsValid && (
+        <p className="center">Please enter a duration greater than zero.</p>
+      )}
+      {inputIsValid && <ResultTable inputs={inputs} />}
     </>
   );
 }
