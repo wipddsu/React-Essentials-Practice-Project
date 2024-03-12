@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Header from "./components/header";
+import Header from "./components/Header";
 import UserInput from "./components/UserInput";
 import ResultTable from "./components/ResultTable";
 
@@ -15,11 +15,11 @@ export default function App() {
   });
 
   const inputResults = calculateInvestmentResults(inputs);
-  let investment = inputs.initialInvestment + inputs.annualInvestment;
+  let capital = inputs.initialInvestment + inputs.annualInvestment;
 
   for (const result of inputResults) {
-    result["investedCapital"] = investment;
-    investment += inputs.annualInvestment;
+    result["investedCapital"] = capital;
+    capital += inputs.annualInvestment;
   }
 
   const handleInputs = (e) => {
