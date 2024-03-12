@@ -4,7 +4,7 @@ import { formatter } from "../utils/investment";
 export default function ResultTable({ inputResults }) {
   return (
     <footer>
-      <table id="result" className="center">
+      <table id="result">
         <thead>
           <tr>
             <th>Year</th>
@@ -14,14 +14,18 @@ export default function ResultTable({ inputResults }) {
             <th>Invested Capital</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="center">
           {inputResults.map((result, index) => (
             <tr key={index}>
               <td>{result.year}</td>
               <td>{formatter.format(result.valueEndOfYear)}</td>
               <td>{formatter.format(result.interest)}</td>
-              <td></td>
-              <td></td>
+              <td>
+                {formatter.format(
+                  result.valueEndOfYear - result.investedCapital,
+                )}
+              </td>
+              <td>{formatter.format(result.investedCapital)}</td>
             </tr>
           ))}
         </tbody>

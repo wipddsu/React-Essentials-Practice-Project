@@ -13,23 +13,20 @@ export default function App() {
     expectedReturn: 0,
     duration: 0,
   });
+
   const inputResults = calculateInvestmentResults(inputs);
+  let investment = inputs.initialInvestment + inputs.annualInvestment;
 
-  // const [investResults, setInvestResults] = useState(inputResults);
-
-  // console.log(
-  //   inputResults.map((result) => {
-  //     const interest = result.interest;
-  //   }),
-  // );
+  for (const result of inputResults) {
+    result["investedCapital"] = investment;
+    investment += inputs.annualInvestment;
+  }
 
   const handleInputs = (e) => {
     setInputs((prevInputs) => ({
       ...prevInputs,
       [e.target.id]: Number(e.target.value),
     }));
-
-    // setInvestResults((prev) => {});
   };
 
   return (
